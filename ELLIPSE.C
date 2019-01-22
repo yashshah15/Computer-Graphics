@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+int gd=DETECT,gm,ox,oy;
+float ry,rx,d1,d2,dx,dy,x,y;
+void main()
+{
+	clrscr();
+	printf("\Enter the coordinates of centre");
+	scanf("%d%d",&ox,&oy);
+	printf("\nEnter The radius along x&y axis");
+	scanf("%f%f",&rx,&ry);
+	initgraph(&gd,&gm,"C:\\TURBOC3\\BGI");
+	x=0;
+	y=ry;
+	d1=(ry*ry)+((ry-0.5)*(ry-0.5)*rx*rx)-(rx*rx*ry*ry);
+	do
+	{
+		dy=2*x*ry*ry;
+		dx=2*y*rx*rx;
+		putpixel(ox+x,oy+y,12);
+		putpixel(ox+x,oy-y,11);
+		putpixel(ox-x,oy-y,10);
+		putpixel(ox-x,oy+y,13);
+		if(d1<0)
+		{
+			d1=d1+(2*ry*ry*x)+(3*(ry*ry));
+			x++;
+			y=y;
+		}
+		else
+		{
+			d1=d1+(2*ry*ry*x)+(2*ry*ry)+(ry*ry)-(2*rx*rx*y)+2*rx*rx;
+			x++;
+			y--;
+		}
+		delay(100);
+	}while(dy<dx);
+	d2=(ry*ry*(x+0.50)*(x+0.5))+(rx*rx*(y-1)*(y-1))-(rx*rx*ry*ry);
+	do
+	{
+		putpixel(ox+x,oy+y,15);
+		putpixel(ox+x,oy-y,14);
+		putpixel(ox-x,oy-y,9);
+		putpixel(ox-x,oy+y,8);
+		if(d2>0)
+		{
+			d2=d2-(2*rx*rx*y)+(3*(ry*ry));
+			x=x;
+			y--;
+		}
+		else
+		{
+			d2=d2+(2*ry*ry*x)-(2*rx*rx*y)+(2*rx*rx)+(ry*ry);
+			x++;
+			y--;
+		}
+		delay(100);
+	}while(y>0);
+	getch();
+	closegraph();
+}
